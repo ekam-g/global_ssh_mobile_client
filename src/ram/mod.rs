@@ -16,7 +16,7 @@ pub static SAFE_PUB_VAR: Lazy<Mutex<PubInfo>> = Lazy::new(|| {
 impl PubInfo {
     pub(crate) fn get() -> MutexGuard<'static, PubInfo> {
         loop {
-            if let Ok(return_val) = SAFE_PUB_VAR.lock(){ 
+            if let Ok(return_val) = SAFE_PUB_VAR.lock(){
                 return return_val;
             }
         }

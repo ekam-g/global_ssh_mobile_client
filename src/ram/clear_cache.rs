@@ -1,7 +1,6 @@
 use std::{thread, time};
 
 use crate::ram::PubInfo;
-use crate::SAFE_PUB_VAR;
 
 pub fn clear_ram_thread() {
     loop {
