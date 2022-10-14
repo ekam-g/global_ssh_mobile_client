@@ -1,3 +1,5 @@
+pub mod clear_cache;
+
 use std::sync::Mutex;
 use once_cell::sync::Lazy;
 
