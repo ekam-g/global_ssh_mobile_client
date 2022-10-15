@@ -1,6 +1,7 @@
-//Todo add db fn
-pub fn send_db(data : &Vec<String>){
-    for val in data {
-        println!("{}", val);
-    }
+mod redis;
+
+pub fn send_db(data: &[String]) {
+    let val = data.join(" ").replace("Space", " ");
+    redis::send(&val).expect("TODO: panic message");
+    println!("{}", val);
 }

