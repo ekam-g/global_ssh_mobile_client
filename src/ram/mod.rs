@@ -32,6 +32,7 @@ pub struct Constant {
 
 pub static CONST: Lazy<Constant> = Lazy::new(|| {
     Constant {
+        // who : "cool".to_string()
         who: format!("{:?}:{}", gethostname(), rand::thread_rng().gen_range(0..=1000000)),
     }
 });
