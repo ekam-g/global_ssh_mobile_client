@@ -9,7 +9,7 @@ pub struct PubInfo {
 
 pub static SAFE_PUB_VAR: Lazy<Mutex<PubInfo>> = Lazy::new(|| {
     Mutex::new(PubInfo {
-        key_pressed_cache: vec!["".to_owned()],
+        key_pressed_cache: vec![],
     })
 });
 
