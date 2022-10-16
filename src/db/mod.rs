@@ -1,11 +1,14 @@
-mod redis;
+use std::{thread, time};
+
+pub(crate) mod redis;
 
 pub fn send_db(data: &[String]) {
+    let val = data.join(" ").replace("Space", " ");
     loop {
-        let val = data.join(" ").replace("Space", " ");
         if redis::send(&val).is_ok() {
             println!("{}", val);
             break;
         }
+        thread::sleep(time::Duration::from_millis(10))
     }
 }

@@ -1,8 +1,7 @@
+use std::{env, thread, time};
 use std::sync::{Mutex, MutexGuard};
-
 use gethostname::gethostname;
 use once_cell::sync::Lazy;
-use rand::Rng;
 
 pub mod clear_cache;
 
@@ -31,8 +30,19 @@ pub struct Constant {
 }
 
 pub static CONST: Lazy<Constant> = Lazy::new(|| {
+    let mut uses = 0;
+    let mut host_db_name = format!("{}:{:?}:{}", env::consts::OS, gethostname(), uses);
+    loop {
+        if let Ok(yes_or_no) = crate::db::redis::exists(&host_db_name) {
+            if !yes_or_no { break; } else {
+                uses += 1;
+                host_db_name = format!("{}:{:?}:{}", env::consts::OS, gethostname(), uses);
+            }
+        }
+        thread::sleep(time::Duration::from_millis(10))
+    }
     Constant {
         // who : "cool".to_string()
-        who: format!("{:?}:{}", gethostname(), rand::thread_rng().gen_range(0..=1000000)),
+        who: host_db_name,
     }
 });
