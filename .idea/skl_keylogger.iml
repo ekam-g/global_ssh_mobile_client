@@ -9,8 +9,13 @@
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/run/run/target" />
       <excludeFolder url="file://$MODULE_DIR$/key_logger/target" />
+      <excludeFolder url="file://$MODULE_DIR$/client/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/client/build" />
+      <excludeFolder url="file://$MODULE_DIR$/client/.dart_tool" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Dart SDK" level="project" />
+    <orderEntry type="library" name="Dart Packages" level="project" />
   </component>
 </module>

@@ -1,15 +1,41 @@
 import 'package:flutter/material.dart';
 
-class WhatDb extends StatefulWidget {
-  const WhatDb({Key? key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key,});
 
   @override
-  _WhatDbState createState() => _WhatDbState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _WhatDbState extends State<WhatDb> {
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Client Keylogger Viewer"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
