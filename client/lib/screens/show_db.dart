@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ShowDb extends StatefulWidget {
-  const ShowDb({Key key}) : super(key: key);
+  const ShowDb({Key? key}) : super(key: key);
 
   @override
   _ShowDbState createState() => _ShowDbState();
