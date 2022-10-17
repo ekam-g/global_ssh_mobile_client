@@ -13,7 +13,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Client Keylogger Viewer',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: const ColorScheme(
+          brightness: Brightness.dark,
+          primary: Colors.blueGrey,
+          onPrimary: Colors.blueGrey,
+          secondary: Colors.black,
+          onSecondary: Colors.black,
+          error: Colors.black,
+          onError: Colors.red,
+          background: Colors.black,
+          onBackground: Colors.black,
+          surface: Colors.blueGrey,
+          onSurface: Colors.black,
+        ),
+        textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.blueGrey)),
       ),
       home: const MyHomePage(),
     );
