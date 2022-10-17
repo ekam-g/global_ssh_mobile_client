@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           surface: Colors.blueGrey,
           onSurface: Colors.black,
         ),
-        textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.blueGrey)),
+        textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white70)),
       ),
       home: const MyHomePage(),
     );
