@@ -13,3 +13,9 @@ Future<bool> check() async {
     return false;
   }
 }
+
+Future<void> newSignIn(String pass, String key) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setString('redis_pass', pass);
+  prefs.setString('redis_key', key);
+}
