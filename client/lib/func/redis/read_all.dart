@@ -7,7 +7,7 @@ class redis {
   List<String> values = [];
 
   static Future<redis> readAll() async {
-    rediscl returnVal = redis();
+    redis returnVal = redis();
     final values = await getSignIn();
     final conn = RedisConnection();
     await conn
