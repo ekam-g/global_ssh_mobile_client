@@ -54,7 +54,7 @@ class _ShowDbState extends State<ShowDb> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.8,
                     child: ListView.builder(
-                      itemCount: redisVals.allKeys.length ,
+                      itemCount: redisVals.allKeys.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
                           child: ListTile(
@@ -64,10 +64,12 @@ class _ShowDbState extends State<ShowDb> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const MoreData()),
+                                MaterialPageRoute(
+                                    builder: (context) => MoreData(
+                                        where: redisVals.allKeys[index]
+                                            .toString())),
                               );
-
-                              },
+                            },
                           ),
                         );
                       },
