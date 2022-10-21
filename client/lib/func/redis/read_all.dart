@@ -4,7 +4,7 @@ import '../check.dart';
 
 class redis {
   List<dynamic> allKeys = [];
-  List<String> values = [];
+  List<List<dynamic>> values = [];
 
   static Future<redis> readAll() async {
     redis returnVal = redis();
@@ -26,7 +26,7 @@ class redis {
                     {
                       await command
                           .send_object(["LRANGE", i, 0, -1]).then((var all) {
-                        returnVal.values.add(all.toString());
+                        returnVal.values.add(all);
                       })
                     }
                 }
