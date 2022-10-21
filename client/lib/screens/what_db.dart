@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     //String pass, String username, String where, String port
                     await newSignIn(
                         redis1.text, redis2.text, redis3.text, redis4.text);
-                    await readAll();
+                    await redis.readAll();
                   },
                   text: "Set",
                   flex: 2,
