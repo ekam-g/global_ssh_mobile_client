@@ -2,6 +2,8 @@ import 'package:client/func/redis/read_all.dart';
 import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/loading.dart';
+
 class MoreData extends StatefulWidget {
   const MoreData({Key? key, required this.where}) : super(key: key);
   final String where;
@@ -11,8 +13,10 @@ class MoreData extends StatefulWidget {
 }
 
 class _MoreDataState extends State<MoreData> {
+  late List<dynamic> redisVals;
+
   update() async {
-    redis.readOneKey(widget.where);
+    redisVals = await redis.readOneKey(widget.where);
     await Future.delayed(const Duration(seconds: 5));
     setState(() {});
   }
@@ -25,6 +29,11 @@ class _MoreDataState extends State<MoreData> {
 
   @override
   Widget build(BuildContext context) {
-    return coolText(text: widget.where, fontSize: 12);
+    try {
+      redisVals[0];
+    } catch (e) {
+      return const Loading();
+    }
+    return coolText(text:redisVals.toString(), fontSize: 12);
   }
 }
