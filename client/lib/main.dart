@@ -38,7 +38,8 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white70)),
       ),
-      home: sign_in  ? const ShowDb() : const MyHomePage(),
+      // home: sign_in  ? const ShowDb() : const MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }

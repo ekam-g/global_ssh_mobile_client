@@ -1,6 +1,9 @@
 import 'package:client/widgets/coolButtion.dart';
 import 'package:flutter/material.dart';
 
+import '../func/check.dart';
+import '../func/redis/read_all.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
     super.key,
@@ -41,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: redis1,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Redis Key',
+                    hintText: 'Redis password',
                   ),
                 ),
               ),
@@ -52,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: redis2,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Redis Key',
+                    hintText: 'Redis username',
                   ),
                 ),
               ),
@@ -63,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: redis3,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Redis Key',
+                    hintText: 'Redis url',
                   ),
                 ),
               ),
@@ -74,19 +77,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: redis4,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Redis Key',
+                    hintText: 'Redis port',
                   ),
                 ),
               ),
               const Spacer(),
-
               ExpandedButton(
-                  onPressed: () {
-                    debugPrint(redis1.text);
-                    debugPrint(redis2.text);
-                    debugPrint(redis3.text);
-                    debugPrint(redis4.text);
-
+                  onPressed: () async {
+                    //String pass, String username, String where, String port
+                    await newSignIn(
+                        redis1.text, redis2.text, redis3.text, redis4.text);
+                    await readAll();
                   },
                   text: "Set",
                   flex: 2,
