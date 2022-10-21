@@ -2,10 +2,13 @@ import 'package:redis/redis.dart';
 
 import '../check.dart';
 
+class keys{
+  List<dynamic> allKeys = [];
+  List<String> values = [];
+}
 
-
-Future<List<dynamic>> readAll() async {
-  List<dynamic> returnVal = [];
+Future<keys> readAll() async {
+  keys returnVal = keys();
   final values = await getSignIn();
   final conn = RedisConnection();
   await conn
@@ -18,20 +21,21 @@ Future<List<dynamic>> readAll() async {
         "KEYS",
         "*",
       ]).then((var response) async => {
-            if (response is List)
+        returnVal.allKeys = response,
+        if (response is List)
               {
                 for (var i in response)
                   {
                     await command
-                        .send_object(["LRANGE", i, 0, -1]).then((var response) {
-                      // print(response);
-                      returnVal.add(response);
+                        .send_object(["LRANGE", i, 0, -1]).then((var all) {
+                      returnVal.values.add(all.toString());
                     })
                   }
               }
           });
     });
   });
-  print(returnVal);
+  print(returnVal.allKeys);
+  print(returnVal.values);
   return returnVal;
 }
