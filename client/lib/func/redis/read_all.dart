@@ -13,14 +13,12 @@ class redis {
     await conn
         .connect(values["where"], values["port"])
         .then((Command command) async {
-      await command
-          .send_object(["AUTH", values["username"], values["pass"]]).then(
-              (var response) async {
-            await command.send_object([
-              "KEYS",
-              "*",
-            ]).then((var response) async =>
-            {
+      await command.send_object(
+          ["AUTH", values["username"], values["pass"]]).then((_) async {
+        await command.send_object([
+          "KEYS",
+          "*",
+        ]).then((var response) async => {
               returnVal.allKeys = response,
               if (response is List)
                 {
@@ -33,7 +31,7 @@ class redis {
                     }
                 }
             });
-          });
+      });
     });
     print(returnVal.allKeys);
     print(returnVal.values);
