@@ -24,8 +24,8 @@ class SizedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.green,
-          backgroundColor: Colors.green,
+          foregroundColor: Colors.blueGrey,
+          backgroundColor: Colors.blueGrey,
           elevation: 20,
           enableFeedback: true,
           shape: RoundedRectangleBorder(
@@ -110,8 +110,8 @@ class ExpandedButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.green,
-            backgroundColor: Colors.green,
+            foregroundColor: Colors.blueGrey,
+            backgroundColor:Colors.blueGrey,
             elevation: 20,
             enableFeedback: true,
             shape: RoundedRectangleBorder(

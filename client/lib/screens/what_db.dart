@@ -1,9 +1,12 @@
+import 'package:client/screens/show_db.dart';
 import 'package:client/widgets/coolButtion.dart';
 import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../func/check.dart';
 import '../func/redis/read_all.dart';
+import '../widgets/error_display.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -37,13 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               const Spacer(),
               const Expanded(
-                flex: 5,
+                flex: 2,
                 child: Image(
                   image: AssetImage("lib/assets/hecker-removebg-preview.png"),
                 ),
               ),
-              Expanded(
-                flex: 1,
+              SizedBox(
+                height: 200,
                 child: TextField(
                   controller: redis1,
                   decoration: const InputDecoration(
@@ -53,8 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               const Spacer(),
-              Expanded(
-                flex: 1,
+              SizedBox(
+                height: 200,
                 child: TextField(
                   controller: redis2,
                   decoration: const InputDecoration(
@@ -64,8 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               const Spacer(),
-              Expanded(
-                flex: 1,
+              SizedBox(
+                height: 200,
                 child: TextField(
                   controller: redis3,
                   decoration: const InputDecoration(
@@ -75,8 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               const Spacer(),
-              Expanded(
-                flex: 1,
+              SizedBox(
+                height: 200,
                 child: TextField(
                   controller: redis4,
                   decoration: const InputDecoration(
@@ -88,10 +91,21 @@ class _MyHomePageState extends State<MyHomePage> {
               const Spacer(),
               ExpandedButton(
                   onPressed: () async {
-                    //String pass, String username, String where, String port
-                    await newSignIn(
-                        redis1.text, redis2.text, redis3.text, redis4.text);
-                    await redis.readAll();
+                    try {
+                      await newSignIn(
+                          redis1.text, redis2.text, redis3.text, redis4.text);
+                      await redis.readAll();
+                      if (mounted) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ShowDb()),
+                        );
+                      }
+                    } catch (e) {
+                      error = e.toString();
+                      ScaffoldMessenger.of(context).showSnackBar(showError);
+                    }
                   },
                   text: "Set",
                   flex: 2,
