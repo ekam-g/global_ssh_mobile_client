@@ -1,4 +1,5 @@
 import 'package:client/widgets/coolButtion.dart';
+import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
 
 import '../func/check.dart';
@@ -23,7 +24,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Please Sign In Your Redis Server"),
+        title: const coolText(
+          text: "Please Sign In Your Redis Server",
+          fontSize: 16,
+        ),
       ),
       body: Center(
         child: SizedBox(

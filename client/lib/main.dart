@@ -4,6 +4,7 @@ import 'package:client/screens/what_db.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   bool signIn = await check();
   runApp(MyApp(
     sign_in: signIn,
@@ -38,8 +39,8 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white70)),
       ),
-      // home: sign_in  ? const ShowDb() : const MyHomePage(),
-      home: const MyHomePage(),
+      home: sign_in  ? const ShowDb() : const MyHomePage(),
+      // home: const MyHomePage(),
     );
   }
 }
