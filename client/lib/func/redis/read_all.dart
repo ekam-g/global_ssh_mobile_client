@@ -37,4 +37,21 @@ class redis {
     print(returnVal.values);
     return returnVal;
   }
+
+  static Future<List<dynamic>> readOneKey(String where) async {
+    List<dynamic> returnVal = [];
+    final values = await getSignIn();
+    final conn = RedisConnection();
+    await conn
+        .connect(values["where"], values["port"])
+        .then((Command command) async {
+      await command.send_object(
+          ["AUTH", values["username"], values["pass"]]).then((_) async {
+        await command.send_object(["LRANGE", where, 0, -1]).then((var all) {
+          returnVal.add(all);
+        });
+      });
+    });
+    return returnVal;
+  }
 }
