@@ -8,7 +8,7 @@ fn client() -> RedisResult<Connection> {
 
 pub fn send(val: &String) -> RedisResult<bool> {
     let mut client = client()?;
-    client.lpush(&crate::ram::CONST.who, val)
+    client.rpush(&crate::ram::CONST.who, val)
 }
 
 pub fn exists<T : ToRedisArgs>(val : T)  -> RedisResult<bool> {

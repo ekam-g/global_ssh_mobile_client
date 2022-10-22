@@ -16,9 +16,11 @@ class _MoreDataState extends State<MoreData> {
   late List<dynamic> redisVals;
 
   update() async {
-    redisVals = await redis.readOneKey(widget.where);
-    setState(() {});
-    await Future.delayed(const Duration(seconds: 5));
+    while (true) {
+      redisVals = await redis.readOneKey(widget.where);
+      setState(() {});
+      await Future.delayed(const Duration(seconds: 5));
+    }
   }
 
   @override

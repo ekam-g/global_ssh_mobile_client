@@ -1,5 +1,6 @@
 import 'package:client/func/redis/read_all.dart';
 import 'package:client/screens/more_data.dart';
+import 'package:client/widgets/coolButtion.dart';
 import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,7 @@ class _ShowDbState extends State<ShowDb> {
   Widget build(BuildContext context) {
     try {
       redisVals.allKeys[0];
-    } catch (e) {
+    } catch (_) {
       return const Loading();
     }
     return Scaffold(
@@ -52,7 +53,10 @@ class _ShowDbState extends State<ShowDb> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.8,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * 0.6,
                     child: ListView.builder(
                       itemCount: redisVals.allKeys.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -65,16 +69,26 @@ class _ShowDbState extends State<ShowDb> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MoreData(
-                                        where: redisVals.allKeys[index]
-                                            .toString())),
+                                    builder: (context) =>
+                                        MoreData(
+                                            where: redisVals.allKeys[index]
+                                                .toString())),
                               );
                             },
                           ),
                         );
                       },
                     ),
-                  )
+                  ),
+                  ExpandedButton(
+                      onPressed: () {
+                        checkDb();
+                      },
+                      text: "Refresh",
+                      flex: 2,
+                      fontSize: 16,
+                      width: 200),
+                  const Spacer(),
                 ],
               ))),
     );
