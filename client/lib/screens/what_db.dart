@@ -45,16 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   image: AssetImage("lib/assets/hecker-removebg-preview.png"),
                 ),
               ),
-              SizedBox(
-                height: 65,
-                child: TextField(
-                  controller: redis1,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Redis password',
-                  ),
-                ),
-              ),
               const Spacer(),
               SizedBox(
                 height: 65,
@@ -63,6 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Redis username',
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 65,
+                child: TextField(
+                  controller: redis1,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Redis password',
                   ),
                 ),
               ),
