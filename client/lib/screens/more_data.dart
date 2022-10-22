@@ -59,7 +59,6 @@ class _MoreDataState extends State<MoreData> {
           width: 500,
           child: Column(
             children: [
-              const Spacer(),
               Expanded(
                 flex: 18,
                 child: ListView.builder(
