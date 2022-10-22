@@ -33,8 +33,6 @@ class redis {
             });
       });
     });
-    print(returnVal.allKeys);
-    print(returnVal.values);
     return returnVal;
   }
 
@@ -48,7 +46,7 @@ class redis {
       await command.send_object(
           ["AUTH", values["username"], values["pass"]]).then((_) async {
         await command.send_object(["LRANGE", where, 0, -1]).then((var all) {
-          returnVal.add(all);
+          returnVal = all;
         });
       });
     });

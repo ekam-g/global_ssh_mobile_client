@@ -1,4 +1,5 @@
 import 'package:client/func/redis/read_all.dart';
+import 'package:client/screens/show_db.dart';
 import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,19 @@ class _MoreDataState extends State<MoreData> {
 
   update() async {
     while (true) {
-      redisVals = await redis.readOneKey(widget.where);
-      setState(() {});
+      try {
+        redisVals = await redis.readOneKey(widget.where);
+        if (mounted) {
+          setState(() {});
+        }
+      } catch (_) {
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ShowDb()),
+          );
+        }
+      }
       await Future.delayed(const Duration(seconds: 5));
     }
   }
@@ -39,15 +51,23 @@ class _MoreDataState extends State<MoreData> {
     return Scaffold(
         appBar: AppBar(
           title: coolText(
-            text: widget.where,
-            fontSize: 12,
+            text: "Data For: ${widget.where}",
+            fontSize: 18,
           ),
         ),
         body: Center(
-            child: Column(
-          children: [
-            coolText(text: redisVals.toString(), fontSize: 12),
-          ],
+            child: SizedBox(
+          width: 500,
+          child: ListView.builder(
+            itemCount: redisVals.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  title: coolText(text :"${redisVals[index]}", fontSize: 12),
+                ),
+              );
+            },
+          ),
         )));
   }
 }
