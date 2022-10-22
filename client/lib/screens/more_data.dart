@@ -17,8 +17,8 @@ class _MoreDataState extends State<MoreData> {
 
   update() async {
     redisVals = await redis.readOneKey(widget.where);
-    await Future.delayed(const Duration(seconds: 5));
     setState(() {});
+    await Future.delayed(const Duration(seconds: 5));
   }
 
   @override
@@ -34,6 +34,18 @@ class _MoreDataState extends State<MoreData> {
     } catch (e) {
       return const Loading();
     }
-    return coolText(text:redisVals.toString(), fontSize: 12);
+    return Scaffold(
+        appBar: AppBar(
+          title: coolText(
+            text: widget.where,
+            fontSize: 12,
+          ),
+        ),
+        body: Center(
+            child: Column(
+          children: [
+            coolText(text: redisVals.toString(), fontSize: 12),
+          ],
+        )));
   }
 }
