@@ -40,13 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               const Spacer(),
               const Expanded(
-                flex: 2,
+                flex: 8,
                 child: Image(
                   image: AssetImage("lib/assets/hecker-removebg-preview.png"),
                 ),
               ),
               SizedBox(
-                height: 200,
+                height: 65,
                 child: TextField(
                   controller: redis1,
                   decoration: const InputDecoration(
@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const Spacer(),
               SizedBox(
-                height: 200,
+                height: 65,
                 child: TextField(
                   controller: redis2,
                   decoration: const InputDecoration(
@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const Spacer(),
               SizedBox(
-                height: 200,
+                height: 65,
                 child: TextField(
                   controller: redis3,
                   decoration: const InputDecoration(
@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const Spacer(),
               SizedBox(
-                height: 200,
+                height: 65,
                 child: TextField(
                   controller: redis4,
                   decoration: const InputDecoration(
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           redis1.text, redis2.text, redis3.text, redis4.text);
                       await redis.readAll();
                       if (mounted) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const ShowDb()),
