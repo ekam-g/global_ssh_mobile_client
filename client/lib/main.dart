@@ -1,6 +1,7 @@
 import 'package:client/func/check.dart';
 import 'package:client/screens/show_db.dart';
 import 'package:client/screens/what_db.dart';
+import 'package:client/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -39,8 +40,8 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white70)),
       ),
-      home: sign_in  ? const ShowDb() : const MyHomePage(),
-      // home: const MyHomePage(),
+      // home: sign_in  ? const ShowDb() : const MyHomePage(),
+      home: const Loading(),
     );
   }
 }

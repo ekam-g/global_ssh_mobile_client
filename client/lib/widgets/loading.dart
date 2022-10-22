@@ -7,18 +7,26 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: const [
-          Spacer(),
-          Expanded(
-            flex: 1,
-            child: Image(
-              image: AssetImage("lib/assets/hecker-removebg-preview.png"),
+      body: Center(
+        child: Column(
+          children: [
+            const Spacer(),
+            const Expanded(
+              flex: 1,
+              child: Image(
+                image: AssetImage("lib/assets/hecker-removebg-preview.png"),
+              ),
             ),
-          ),
-          coolText(text: "Loading......", fontSize: 30),
-          Spacer(),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                coolText(text: "Loading  ", fontSize: 30),
+                CircularProgressIndicator(),
+              ],
+            ),
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }
