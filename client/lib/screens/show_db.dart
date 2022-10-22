@@ -1,5 +1,6 @@
 import 'package:client/func/redis/read_all.dart';
 import 'package:client/screens/more_data.dart';
+import 'package:client/screens/what_db.dart';
 import 'package:client/widgets/coolButtion.dart';
 import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,13 @@ class _ShowDbState extends State<ShowDb> {
     }
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const MyHomePage()));
+          },
+        ),
         title: const coolText(
           text: "Victim's Data",
           fontSize: 16,
