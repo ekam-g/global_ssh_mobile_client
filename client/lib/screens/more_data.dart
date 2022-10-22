@@ -23,15 +23,10 @@ class _MoreDataState extends State<MoreData> {
         if (mounted) {
           setState(() {});
         }
+        await Future.delayed(const Duration(seconds: 10));
       } catch (_) {
-        if (mounted) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ShowDb()),
-          );
-        }
+        await Future.delayed(const Duration(seconds: 2));
       }
-      await Future.delayed(const Duration(seconds: 5));
     }
   }
 
@@ -52,7 +47,7 @@ class _MoreDataState extends State<MoreData> {
         appBar: AppBar(
           title: coolText(
             text: "Data For: ${widget.where}",
-            fontSize: 18,
+            fontSize: 12,
           ),
         ),
         body: Center(
@@ -63,7 +58,7 @@ class _MoreDataState extends State<MoreData> {
             itemBuilder: (context, index) {
               return Card(
                 child: ListTile(
-                  title: coolText(text :"${redisVals[index]}", fontSize: 12),
+                  title: coolText(text: "${redisVals[index]}", fontSize: 12),
                 ),
               );
             },

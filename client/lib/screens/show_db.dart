@@ -52,11 +52,8 @@ class _ShowDbState extends State<ShowDb> {
               width: 800,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height * 0.6,
+                  Expanded(
+                    flex: 10,
                     child: ListView.builder(
                       itemCount: redisVals.allKeys.length,
                       itemBuilder: (BuildContext context, int index) {

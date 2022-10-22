@@ -17,7 +17,7 @@ class coolText extends StatelessWidget {
     return Text(
       text,
       textAlign: TextAlign.center,
-      style: TextStyle(fontSize: fontSize, fontFamily: 'Poppins'),
+      style: TextStyle(fontSize: fontSize, fontFamily: 'Poppins', color: Colors.white),
     );
   }
 }

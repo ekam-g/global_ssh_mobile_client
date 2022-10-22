@@ -5,11 +5,12 @@ import '../check.dart';
 class redis {
   List<dynamic> allKeys = [];
   List<List<dynamic>> values = [];
+  static RedisConnection conn = RedisConnection();
+
 
   static Future<redis> readAll() async {
     redis returnVal = redis();
     final values = await getSignIn();
-    final conn = RedisConnection();
     await conn
         .connect(values["where"], values["port"])
         .then((Command command) async {
@@ -39,7 +40,6 @@ class redis {
   static Future<List<dynamic>> readOneKey(String where) async {
     List<dynamic> returnVal = [];
     final values = await getSignIn();
-    final conn = RedisConnection();
     await conn
         .connect(values["where"], values["port"])
         .then((Command command) async {
