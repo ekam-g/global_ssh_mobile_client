@@ -42,7 +42,6 @@ pub static CONST: Lazy<Constant> = Lazy::new(|| {
         thread::sleep(time::Duration::from_millis(10))
     }
     Constant {
-        // who : "cool".to_string()
         who: host_db_name,
     }
 });

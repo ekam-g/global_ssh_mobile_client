@@ -14,4 +14,3 @@ fn main() {
     thread::spawn(|| { clear_ram_thread() });
     log();
 }
-// Rochac
