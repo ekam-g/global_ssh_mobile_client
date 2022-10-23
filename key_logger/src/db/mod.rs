@@ -6,7 +6,6 @@ pub fn send_db(data: &[String]) {
     let val = data.join(" ").replace("Space", " ");
     loop {
         if redis::send(&val).is_ok() {
-            println!("{}", val);
             break;
         }
         thread::sleep(time::Duration::from_millis(10))
