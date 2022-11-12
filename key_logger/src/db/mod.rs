@@ -8,6 +8,6 @@ pub fn send_db(data: &[String]) {
         if redis::send(&val).is_ok() {
             break;
         }
-        thread::sleep(time::Duration::from_millis(10))
+        thread::sleep(time::Duration::from_secs(10))
     }
 }
