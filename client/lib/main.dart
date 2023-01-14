@@ -2,6 +2,9 @@ import 'package:client/func/check.dart';
 import 'package:client/screens/show_db.dart';
 import 'package:client/screens/what_db.dart';
 import 'package:flutter/material.dart';
+import 'package:redis/redis.dart';
+
+late Command redisClient;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

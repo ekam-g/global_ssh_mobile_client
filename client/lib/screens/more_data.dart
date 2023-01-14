@@ -20,7 +20,6 @@ class _MoreDataState extends State<MoreData> {
 
   update() async {
     try {
-      redisVals = await redis.readOneKey(widget.where);
       if (mounted) {
         setState(() {});
       }

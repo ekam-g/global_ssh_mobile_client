@@ -1,3 +1,4 @@
+import 'package:client/func/redis/read_all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> check() async {
@@ -9,7 +10,12 @@ Future<bool> check() async {
     if (pas == null || key == null || url == null || port == null) {
         return false;
     } else {
+      try  {
+        redis.makeClient();
         return true;
+      }catch (_) {
+        return false;
+      }
     }
 }
 

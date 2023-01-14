@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:client/main.dart';
 import 'package:redis/redis.dart';
 
 import '../check.dart';
@@ -6,50 +9,29 @@ class redis {
   List<dynamic> allKeys = [];
   List<List<dynamic>> values = [];
 
-  static Future<redis> readAll() async {
-    redis returnVal = redis();
+  static Future<void> makeClient () async {
     final values = await getSignIn();
     final conn = RedisConnection();
     await conn
         .connect(values["where"], values["port"])
         .then((Command command) async {
       await command.send_object(
-          ["AUTH", values["username"], values["pass"]]).then((_) async {
-        await command.send_object([
-          "KEYS",
-          "*",
-        ]).then((var response) async => {
-              returnVal.allKeys = response,
-              if (response is List)
-                {
-                  for (var i in response)
-                    {
-                      await command
-                          .send_object(["LRANGE", i, 0, -1]).then((var all) {
-                        returnVal.values.add(all);
-                      })
-                    }
-                }
-            });
-      });
+          ["AUTH", values["username"], values["pass"]]);
+      redisClient = command;
     });
-    return returnVal;
+    throw "redis error";
   }
-
-  static Future<List<dynamic>> readOneKey(String where) async {
-    List<dynamic> returnVal = [];
-    final values = await getSignIn();
-    final conn = RedisConnection();
-    await conn
-        .connect(values["where"], values["port"])
-        .then((Command command) async {
-      await command.send_object(
-          ["AUTH", values["username"], values["pass"]]).then((_) async {
-        await command.send_object(["LRANGE", where, 0, -1]).then((var all) {
-          returnVal = all;
-        });
-      });
-    });
-    return returnVal;
+  static Future<String> readOneKey(String where) async {
+    return await redisClient.send_object(["GET", where,]);
+  }
+  static Future<dynamic> workingServers() async {
+    List<String> workingServers = [];
+    final List<String> allKeys = await redisClient.send_object(["KEYS", "*",]);
+    for (int x = 0; x < allKeys.length; x++) {
+      String works = await readOneKey(allKeys[x]);
+      if (works.contains("**")) {
+        workingServers.add(allKeys[x]);
+      }
+    }
   }
 }

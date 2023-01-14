@@ -94,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     try {
                       await newSignIn(
                           redis1.text, redis2.text, redis3.text, redis4.text);
-                      await redis.readAll();
                       if (mounted) {
                         Navigator.pushReplacement(
                           context,

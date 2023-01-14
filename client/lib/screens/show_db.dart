@@ -19,13 +19,15 @@ class _ShowDbState extends State<ShowDb> {
   redis redisVals = redis();
 
   checkDb() async {
-    try {
-      redisVals = await redis.readAll();
-    } catch (e) {
-      error = e.toString();
-      ScaffoldMessenger.of(context).showSnackBar(showError);
+    while (true) {
+      try {
+        redisVals = await redis.workingServers();
+      } catch (e) {
+        error = e.toString();
+        ScaffoldMessenger.of(context).showSnackBar(showError);
+      }
+      setState(() {});
     }
-    setState(() {});
   }
 
   @override
@@ -51,7 +53,7 @@ class _ShowDbState extends State<ShowDb> {
           },
         ),
         title: const coolText(
-          text: "Victim's Data",
+          text: "Working Servers",
           fontSize: 16,
         ),
       ),
@@ -74,10 +76,9 @@ class _ShowDbState extends State<ShowDb> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        MoreData(
-                                            where: redisVals.allKeys[index]
-                                                .toString())),
+                                    builder: (context) => MoreData(
+                                        where: redisVals.allKeys[index]
+                                            .toString())),
                               );
                             },
                           ),
