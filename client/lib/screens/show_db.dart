@@ -21,12 +21,15 @@ class _ShowDbState extends State<ShowDb> {
   checkDb() async {
     while (true) {
       try {
-        redisVals = await redis.workingServers();
+        await redisVals.workingServers();
       } catch (e) {
         error = e.toString();
         ScaffoldMessenger.of(context).showSnackBar(showError);
       }
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
+      await Future.delayed(const Duration(seconds: 3));
     }
   }
 
@@ -41,7 +44,9 @@ class _ShowDbState extends State<ShowDb> {
     try {
       redisVals.allKeys[0];
     } catch (_) {
-      return const Loading();
+      return const Loading(
+        text: "Loading:   ",
+      );
     }
     return Scaffold(
       appBar: AppBar(
@@ -70,7 +75,7 @@ class _ShowDbState extends State<ShowDb> {
                         return Card(
                           child: ListTile(
                             leading: const Icon(Icons.face_rounded),
-                            title: Text("${redisVals.allKeys[index]}"),
+                            title: Text(redisVals.allKeys[index].toString()),
                             subtitle: const Text('Click to see more'),
                             onTap: () {
                               Navigator.push(
@@ -78,6 +83,7 @@ class _ShowDbState extends State<ShowDb> {
                                 MaterialPageRoute(
                                     builder: (context) => MoreData(
                                         where: redisVals.allKeys[index]
+                                            .toString()
                                             .toString())),
                               );
                             },
@@ -86,14 +92,6 @@ class _ShowDbState extends State<ShowDb> {
                       },
                     ),
                   ),
-                  ExpandedButton(
-                      onPressed: () {
-                        checkDb();
-                      },
-                      text: "Refresh",
-                      flex: 2,
-                      fontSize: 16,
-                      width: 200),
                   const Spacer(),
                 ],
               ))),

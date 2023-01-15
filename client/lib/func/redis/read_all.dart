@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:client/main.dart';
 import 'package:redis/redis.dart';
 
 import '../check.dart';
 
 class redis {
-  List<dynamic> allKeys = [];
-  List<List<dynamic>> values = [];
+  List<String> allKeys = [];
+  List<String> data = [];
 
   static Future<void> makeClient () async {
     final values = await getSignIn();
@@ -19,18 +17,17 @@ class redis {
           ["AUTH", values["username"], values["pass"]]);
       redisClient = command;
     });
-    throw "redis error";
   }
   static Future<String> readOneKey(String where) async {
-    return await redisClient.send_object(["GET", where,]);
+    return await redisClient!.send_object(["GET", where,]);
   }
-  static Future<dynamic> workingServers() async {
-    List<String> workingServers = [];
-    final List<String> allKeys = await redisClient.send_object(["KEYS", "*",]);
-    for (int x = 0; x < allKeys.length; x++) {
-      String works = await readOneKey(allKeys[x]);
-      if (works.contains("**")) {
-        workingServers.add(allKeys[x]);
+  Future<dynamic> workingServers() async {
+    allKeys = [];
+    final List<dynamic> allKeysRedis = await redisClient!.send_object(["KEYS", "*",]);
+    for (int x = 0; x < allKeysRedis.length; x++) {
+      dynamic works = await readOneKey(allKeysRedis[x].toString());
+      if (works.toString().contains("**")) {
+        allKeys.add(allKeysRedis[x].toString());
       }
     }
   }

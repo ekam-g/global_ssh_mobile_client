@@ -2,7 +2,8 @@ import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
 
 class Loading extends StatelessWidget {
-  const Loading({Key? key}) : super(key: key);
+  final String text;
+  const Loading({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,9 @@ class Loading extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                coolText(text: "Loading  ", fontSize: 30),
-                CircularProgressIndicator(),
+              children:  [
+                coolText(text: text, fontSize: 30),
+                const CircularProgressIndicator(),
               ],
             ),
             const Spacer(),

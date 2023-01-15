@@ -1,22 +1,25 @@
 import 'package:client/func/redis/read_all.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> check() async {
+  try {
     final prefs = await SharedPreferences.getInstance();
-    final String? pas =prefs.getString('redis_pass');
+    final String? pas = prefs.getString('redis_pass');
     final String? key = prefs.getString('redis_username');
     final String? url = prefs.getString('redis_location');
     final int? port = prefs.getInt('redis_port');
     if (pas == null || key == null || url == null || port == null) {
-        return false;
-    } else {
-      try  {
-        redis.makeClient();
-        return true;
-      }catch (_) {
-        return false;
-      }
+      return false;
     }
+    await redis.makeClient();
+    return true;
+  } catch(e) {
+    if (kDebugMode) {
+      print (e);
+    }
+    return false;
+  }
 }
 
 Future<void> newSignIn(

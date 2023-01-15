@@ -23,7 +23,6 @@ class _MoreDataState extends State<MoreData> {
       if (mounted) {
         setState(() {});
       }
-      await Future.delayed(const Duration(seconds: 10));
     } catch (e) {
       if (mounted) {
         error = e.toString();
@@ -44,7 +43,7 @@ class _MoreDataState extends State<MoreData> {
     try {
       redisVals[0];
     } catch (e) {
-      return const Loading();
+      return const Loading(text: "Searching For Servers:  ",);
     }
     return Scaffold(
         appBar: AppBar(
