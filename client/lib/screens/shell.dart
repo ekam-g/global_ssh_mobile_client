@@ -17,6 +17,7 @@ class MoreData extends StatefulWidget {
 class _MoreDataState extends State<MoreData> {
   List<String> shellData = [];
   bool allowedSend = false;
+  TextEditingController textController = TextEditingController();
 
   update() async {
     String oldData = "";
@@ -37,6 +38,13 @@ class _MoreDataState extends State<MoreData> {
           ScaffoldMessenger.of(context).showSnackBar(showError);
         }
       }
+    }
+  }
+
+  send() async {
+    if (allowedSend) {
+      RedisCommand.sendCommand(widget.where, textController.text);
+      allowedSend = false;
     }
   }
 
@@ -80,6 +88,14 @@ class _MoreDataState extends State<MoreData> {
                   },
                 ),
               ),
+              Expanded(
+                  child: TextField(
+                onSubmitted: send(),
+                controller: textController,
+                decoration: const InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white),
+                    hintText: "Enter Command"),
+              )),
               ExpandedButton(
                   onPressed: () {
                     RedisCommand.kill(widget.where);

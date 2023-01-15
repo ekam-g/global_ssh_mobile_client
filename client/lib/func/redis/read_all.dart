@@ -53,4 +53,12 @@ class RedisCommand {
   static Future<void> kill(String where) async {
     await redis.send(where, "&&kill");
   }
+
+  static Future<void> sendCommand(String where, String what) async {
+    if (what.contains("command_sleep")) {
+      redis.send(where, "%%$what");
+    } else {
+      redis.send(where, what);
+    }
+  }
 }
