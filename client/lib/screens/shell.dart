@@ -16,12 +16,15 @@ class MoreData extends StatefulWidget {
 
 class _MoreDataState extends State<MoreData> {
   List<String> shellData = [];
+  bool allowedSend = false;
+
   update() async {
     String oldData = "";
     while (true) {
       try {
         String data = await redis.getCommand(widget.where);
         if (oldData != data) {
+          allowedSend = true;
           shellData.add(data);
           oldData = data;
           if (mounted) {
@@ -48,7 +51,9 @@ class _MoreDataState extends State<MoreData> {
     try {
       shellData[0];
     } catch (e) {
-      return const Loading(text: "Searching For Servers:  ",);
+      return const Loading(
+        text: "Waiting:  ",
+      );
     }
     return Scaffold(
         appBar: AppBar(
@@ -69,8 +74,7 @@ class _MoreDataState extends State<MoreData> {
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
-                        title:
-                            coolText(text: "${shellData[index]}", fontSize: 12),
+                        title: coolText(text: shellData[index], fontSize: 12),
                       ),
                     );
                   },
@@ -78,10 +82,10 @@ class _MoreDataState extends State<MoreData> {
               ),
               ExpandedButton(
                   onPressed: () {
-                    update();
+                    RedisCommand.kill(widget.where);
                   },
-                  text: "Update",
-                  flex: 3,
+                  text: "Kill Command",
+                  flex: 1,
                   fontSize: 14,
                   width: 250),
               const Spacer(),

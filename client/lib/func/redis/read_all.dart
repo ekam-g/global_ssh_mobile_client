@@ -37,11 +37,20 @@ class redis {
       String data = await readOneKey(where);
       if (data.contains("**")) {
         return data.replaceAll("**", "");
-      }
-      else if (data.contains("%%")){
+      } else if (data.contains("%%")) {
         return data.replaceAll("%%", "");
       }
       Future.delayed(const Duration(milliseconds: 4));
     }
+  }
+
+  static Future<void> send(String where, String what) async {
+    await redisClient!.send_object(["SET", where, what]);
+  }
+}
+
+class RedisCommand {
+  static Future<void> kill(String where) async {
+    await redis.send(where, "&&kill");
   }
 }
