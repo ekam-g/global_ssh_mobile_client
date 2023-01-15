@@ -1,5 +1,4 @@
 import 'package:client/func/redis/read_all.dart';
-import 'package:client/screens/workingServers.dart';
 import 'package:client/widgets/coolButtion.dart';
 import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +23,7 @@ class _MoreDataState extends State<MoreData> {
         String data = await redis.getCommand(widget.where);
         if (oldData != data) {
           shellData.add(data);
+          oldData = data;
           if (mounted) {
             setState(() {});
           }

@@ -1,7 +1,6 @@
 import 'package:client/func/redis/read_all.dart';
 import 'package:client/screens/shell.dart';
 import 'package:client/screens/what_db.dart';
-import 'package:client/widgets/coolButtion.dart';
 import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
 
@@ -72,18 +71,32 @@ class _ShowDbState extends State<ShowDb> {
                     child: ListView.builder(
                       itemCount: redisVals.allKeys.length,
                       itemBuilder: (BuildContext context, int index) {
+                        late Color whatTextColor;
+                        if (redisVals.data[index].contains("**")) {
+                          whatTextColor = Colors.white;
+                        } else if (redisVals.data[index].contains("%%")) {
+                          whatTextColor = Colors.amber;
+                        } else {
+                          whatTextColor = Colors.red;
+                        }
                         return Card(
                           child: ListTile(
                             leading: const Icon(Icons.computer_rounded),
-                            title: Text(redisVals.allKeys[index].toString(), style: const TextStyle(fontSize: 12),),
-                            subtitle: const Text('Click to Access', style: TextStyle(fontSize: 10),),
+                            title: Text(
+                              redisVals.allKeys[index].toString(),
+                              style:
+                                  TextStyle(fontSize: 12, color: whatTextColor),
+                            ),
+                            subtitle: const Text(
+                              'Click to Access',
+                              style: TextStyle(fontSize: 10),
+                            ),
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MoreData(
                                         where: redisVals.allKeys[index]
-                                            .toString()
                                             .toString())),
                               );
                             },
