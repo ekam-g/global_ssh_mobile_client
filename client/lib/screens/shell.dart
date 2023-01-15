@@ -68,11 +68,20 @@ class _MoreDataState extends State<MoreData> {
     }
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.backspace_outlined,
+              color: Colors.white,
+            ),
+            // Put icon of your preference.
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text(
             "${widget.where} in $path",
-            style: const TextStyle(
-              fontSize: 10,
-            ),
+            style: const TextStyle(fontSize: 10, color: Colors.white),
             textAlign: TextAlign.center,
           ),
         ),
@@ -101,7 +110,7 @@ class _MoreDataState extends State<MoreData> {
               },
               controller: textController,
               decoration: const InputDecoration(
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 8),
+                  hintStyle: TextStyle(color: Colors.white, fontSize: 8),
                   hintText: "Enter Command"),
             )),
             const Spacer(),
