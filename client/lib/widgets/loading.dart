@@ -21,7 +21,7 @@ class Loading extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children:  [
-                coolText(text: text, fontSize: 30),
+                coolText(text: text, fontSize: 25),
                 const CircularProgressIndicator(),
               ],
             ),

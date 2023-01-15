@@ -1,5 +1,5 @@
 import 'package:client/func/redis/read_all.dart';
-import 'package:client/screens/show_db.dart';
+import 'package:client/screens/workingServers.dart';
 import 'package:client/widgets/coolButtion.dart';
 import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
@@ -16,19 +16,24 @@ class MoreData extends StatefulWidget {
 }
 
 class _MoreDataState extends State<MoreData> {
-  late List<dynamic> redisVals;
-
+  List<String> shellData = [];
   update() async {
-    try {
-      if (mounted) {
-        setState(() {});
+    String oldData = "";
+    while (true) {
+      try {
+        String data = await redis.getCommand(widget.where);
+        if (oldData != data) {
+          shellData.add(data);
+          if (mounted) {
+            setState(() {});
+          }
+        }
+      } catch (e) {
+        if (mounted) {
+          error = e.toString();
+          ScaffoldMessenger.of(context).showSnackBar(showError);
+        }
       }
-    } catch (e) {
-      if (mounted) {
-        error = e.toString();
-        ScaffoldMessenger.of(context).showSnackBar(showError);
-      }
-      await Future.delayed(const Duration(seconds: 2));
     }
   }
 
@@ -41,7 +46,7 @@ class _MoreDataState extends State<MoreData> {
   @override
   Widget build(BuildContext context) {
     try {
-      redisVals[0];
+      shellData[0];
     } catch (e) {
       return const Loading(text: "Searching For Servers:  ",);
     }
@@ -60,12 +65,12 @@ class _MoreDataState extends State<MoreData> {
               Expanded(
                 flex: 18,
                 child: ListView.builder(
-                  itemCount: redisVals.length,
+                  itemCount: shellData.length,
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
                         title:
-                            coolText(text: "${redisVals[index]}", fontSize: 12),
+                            coolText(text: "${shellData[index]}", fontSize: 12),
                       ),
                     );
                   },

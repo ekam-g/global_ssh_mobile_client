@@ -1,5 +1,5 @@
 import 'package:client/func/redis/read_all.dart';
-import 'package:client/screens/more_data.dart';
+import 'package:client/screens/shell.dart';
 import 'package:client/screens/what_db.dart';
 import 'package:client/widgets/coolButtion.dart';
 import 'package:client/widgets/coolText.dart';
@@ -22,12 +22,12 @@ class _ShowDbState extends State<ShowDb> {
     while (true) {
       try {
         await redisVals.workingServers();
+        if (mounted) {
+          setState(() {});
+        }
       } catch (e) {
         error = e.toString();
         ScaffoldMessenger.of(context).showSnackBar(showError);
-      }
-      if (mounted) {
-        setState(() {});
       }
       await Future.delayed(const Duration(seconds: 3));
     }
@@ -45,7 +45,7 @@ class _ShowDbState extends State<ShowDb> {
       redisVals.allKeys[0];
     } catch (_) {
       return const Loading(
-        text: "Loading:   ",
+        text: "Searching:   ",
       );
     }
     return Scaffold(

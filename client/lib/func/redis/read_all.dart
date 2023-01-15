@@ -31,4 +31,16 @@ class redis {
       }
     }
   }
+  static Future<String> getCommand(String where) async {
+    while (true) {
+      String data = await readOneKey(where);
+      if (data.contains("**")) {
+        return data.replaceAll("**", "");
+      }
+      else if (data.contains("%%")){
+        return data.replaceAll("%%", "");
+      }
+      Future.delayed(const Duration(milliseconds: 4));
+    }
+  }
 }
