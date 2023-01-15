@@ -18,18 +18,16 @@ class _ShowDbState extends State<ShowDb> {
   redis redisVals = redis();
 
   checkDb() async {
-    while (true) {
       try {
-        await redisVals.workingServers();
-        if (mounted) {
-          setState(() {});
-        }
-      } catch (e) {
-        error = e.toString();
-        ScaffoldMessenger.of(context).showSnackBar(showError);
+      await redisVals.workingServers();
+      if (mounted) {
+        setState(() {});
       }
-      await Future.delayed(const Duration(seconds: 3));
+    } catch (e) {
+      error = e.toString();
+      ScaffoldMessenger.of(context).showSnackBar(showError);
     }
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   @override

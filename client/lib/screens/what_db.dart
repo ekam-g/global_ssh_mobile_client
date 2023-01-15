@@ -2,10 +2,8 @@ import 'package:client/screens/workingServers.dart';
 import 'package:client/widgets/coolButtion.dart';
 import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../func/check.dart';
-import '../func/redis/read_all.dart';
 import '../widgets/error_display.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -42,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
               const Expanded(
                 flex: 8,
                 child: Image(
-                  image: AssetImage("lib/assets/hecker-removebg-preview.png"),
+                  image: AssetImage("lib/assets/cool.png"),
                 ),
               ),
               const Spacer(),

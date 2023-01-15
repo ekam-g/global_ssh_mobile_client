@@ -15,7 +15,7 @@ class Loading extends StatelessWidget {
             const Expanded(
               flex: 1,
               child: Image(
-                image: AssetImage("lib/assets/hecker-removebg-preview.png"),
+                image: AssetImage("lib/assets/cool.png"),
               ),
             ),
             Row(

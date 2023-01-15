@@ -18,6 +18,7 @@ class _MoreDataState extends State<MoreData> {
   List<String> shellData = [];
   bool allowedSend = false;
   TextEditingController textController = TextEditingController();
+  String path = "Loading.....";
 
   update() async {
     String oldData = "";
@@ -28,6 +29,7 @@ class _MoreDataState extends State<MoreData> {
           allowedSend = true;
           shellData.add(data);
           oldData = data;
+          path = await redis.getPath(widget.where);
           if (mounted) {
             setState(() {});
           }
@@ -66,67 +68,70 @@ class _MoreDataState extends State<MoreData> {
     }
     return Scaffold(
         appBar: AppBar(
-          title: coolText(
-            text: "Data For: ${widget.where}",
-            fontSize: 12,
+          title: Text(
+            "${widget.where} in $path",
+            style: const TextStyle(
+              fontSize: 10,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
         body: Center(
-            child: SizedBox(
-          width: 500,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 18,
-                child: ListView.builder(
-                  itemCount: shellData.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: coolText(text: shellData[index], fontSize: 12),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Expanded(
-                  child: TextField(
-                onSubmitted: (_) async {
-                  await send();
+            child: Column(
+          children: [
+            Expanded(
+              flex: 18,
+              child: ListView.builder(
+                itemCount: shellData.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: coolText(text: shellData[index], fontSize: 12),
+                    ),
+                  );
                 },
-                controller: textController,
-                decoration: const InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white, fontSize: 8),
-                    hintText: "Enter Command"),
-              )),
-              Expanded(
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    ExpandedButtonRow(
-                        onPressed: () {
-                          RedisCommand.kill(widget.where);
-                        },
-                        text: "Kill Command",
-                        flex: 4,
-                        fontSize: 8,
-                        height: 80),
-                    const Spacer(),
-                    ExpandedButtonRow(
-                        onPressed: () {
-                          send();
-                        },
-                        text: "send",
-                        flex: 4,
-                        fontSize: 8,
-                        height: 80),
-                    const Spacer(),
-                  ],
-                ),
               ),
-              const Spacer(),
-            ],
-          ),
+            ),
+            Expanded(
+                child: TextField(
+              onSubmitted: (val) async {
+                if (val.isNotEmpty) {
+                  await send();
+                }
+              },
+              controller: textController,
+              decoration: const InputDecoration(
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 8),
+                  hintText: "Enter Command"),
+            )),
+            const Spacer(),
+            Expanded(
+              child: Row(
+                children: [
+                  const Spacer(),
+                  ExpandedButtonRow(
+                      onPressed: () {
+                        RedisCommand.kill(widget.where);
+                      },
+                      text: "Kill Command",
+                      flex: 4,
+                      fontSize: 8,
+                      height: 80),
+                  const Spacer(),
+                  ExpandedButtonRow(
+                      onPressed: () {
+                        send();
+                      },
+                      text: "send",
+                      flex: 4,
+                      fontSize: 8,
+                      height: 80),
+                  const Spacer(),
+                ],
+              ),
+            ),
+            const Spacer(),
+          ],
         )));
   }
 }

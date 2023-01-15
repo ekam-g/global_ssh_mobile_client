@@ -158,8 +158,8 @@ class ExpandedButtonRow extends StatelessWidget {
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.grey,
-            backgroundColor: Colors.grey,
+            foregroundColor: Colors.blueGrey,
+            backgroundColor: Colors.blueGrey,
             elevation: 20,
             enableFeedback: true,
             shape: RoundedRectangleBorder(
