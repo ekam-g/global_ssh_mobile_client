@@ -74,9 +74,9 @@ class _ShowDbState extends State<ShowDb> {
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
                           child: ListTile(
-                            leading: const Icon(Icons.face_rounded),
-                            title: Text(redisVals.allKeys[index].toString()),
-                            subtitle: const Text('Click to see more'),
+                            leading: const Icon(Icons.computer_rounded),
+                            title: Text(redisVals.allKeys[index].toString(), style: const TextStyle(fontSize: 12),),
+                            subtitle: const Text('Click to Access', style: TextStyle(fontSize: 10),),
                             onTap: () {
                               Navigator.push(
                                 context,
