@@ -44,6 +44,7 @@ class _MoreDataState extends State<MoreData> {
   send() async {
     if (allowedSend) {
       RedisCommand.sendCommand(widget.where, textController.text);
+      textController.clear();
       allowedSend = false;
     }
   }
@@ -90,20 +91,39 @@ class _MoreDataState extends State<MoreData> {
               ),
               Expanded(
                   child: TextField(
-                onSubmitted: send(),
+                onSubmitted: (_) async {
+                  await send();
+                },
                 controller: textController,
                 decoration: const InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 8),
                     hintText: "Enter Command"),
               )),
-              ExpandedButton(
-                  onPressed: () {
-                    RedisCommand.kill(widget.where);
-                  },
-                  text: "Kill Command",
-                  flex: 1,
-                  fontSize: 14,
-                  width: 250),
+              Expanded(
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    ExpandedButtonRow(
+                        onPressed: () {
+                          RedisCommand.kill(widget.where);
+                        },
+                        text: "Kill Command",
+                        flex: 4,
+                        fontSize: 8,
+                        height: 80),
+                    const Spacer(),
+                    ExpandedButtonRow(
+                        onPressed: () {
+                          send();
+                        },
+                        text: "send",
+                        flex: 4,
+                        fontSize: 8,
+                        height: 80),
+                    const Spacer(),
+                  ],
+                ),
+              ),
               const Spacer(),
             ],
           ),

@@ -58,7 +58,7 @@ class RedisCommand {
     if (what.contains("command_sleep")) {
       redis.send(where, "%%$what");
     } else {
-      redis.send(where, what);
+      redis.send(where, "&&$what");
     }
   }
 }
