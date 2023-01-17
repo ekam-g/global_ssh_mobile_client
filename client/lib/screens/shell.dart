@@ -1,6 +1,5 @@
 import 'package:client/func/redis/read_all.dart';
 import 'package:client/widgets/coolButtion.dart';
-import 'package:client/widgets/coolText.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/error_display.dart';
@@ -15,10 +14,12 @@ class MoreData extends StatefulWidget {
 }
 
 class _MoreDataState extends State<MoreData> {
+  double fontSize = 12;
   List<String> shellData = [];
   bool allowedSend = false;
   TextEditingController textController = TextEditingController();
   String path = "Loading.....";
+  ScrollController controller = ScrollController();
 
   update() async {
     String oldData = "";
@@ -48,6 +49,7 @@ class _MoreDataState extends State<MoreData> {
       RedisCommand.sendCommand(widget.where, textController.text);
       textController.clear();
       allowedSend = false;
+      controller.jumpTo(shellData.length.toDouble());
     }
   }
 
@@ -69,9 +71,28 @@ class _MoreDataState extends State<MoreData> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    fontSize -= 0.5;
+                  });
+                },
+                icon: const Icon(Icons.exposure_minus_1, color: Colors.white)),
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    fontSize += 0.5;
+                  });
+                },
+                icon: const Icon(
+                  Icons.plus_one_sharp,
+                  color: Colors.white,
+                )),
+          ],
           leading: IconButton(
             icon: const Icon(
-              Icons.backspace_outlined,
+              Icons.arrow_back,
               color: Colors.white,
             ),
             // Put icon of your preference.
@@ -81,66 +102,73 @@ class _MoreDataState extends State<MoreData> {
           ),
           title: Text(
             "${widget.where} in $path",
-            style: const TextStyle(fontSize: 10, color: Colors.white),
+            style: TextStyle(fontSize: fontSize + 2, color: Colors.white),
             textAlign: TextAlign.center,
           ),
         ),
         body: Center(
             child: Column(
-          children: [
-            Expanded(
-              flex: 18,
-              child: ListView.builder(
+              children: [
+                Expanded(
+                  flex: 18,
+                  child: ListView.builder(
+                    controller: controller,
                 itemCount: shellData.length,
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      title: coolText(text: shellData[index], fontSize: 12),
+                      title: Text(
+                        shellData[index],
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: fontSize,
+                        ),
+                      ),
                     ),
-                  );
-                },
-              ),
-            ),
-            Expanded(
-                child: TextField(
-              onSubmitted: (val) async {
+                      );
+                    },
+                  ),
+                ),
+                Expanded(
+                    child: TextField(
+                      onSubmitted: (val) async {
                 if (val.isNotEmpty) {
                   await send();
                 }
               },
               controller: textController,
-              decoration: const InputDecoration(
-                  hintStyle: TextStyle(color: Colors.white, fontSize: 8),
+              decoration: InputDecoration(
+                  hintStyle: TextStyle(color: Colors.white, fontSize: fontSize),
                   hintText: "Enter Command"),
             )),
-            const Spacer(),
-            Expanded(
-              child: Row(
-                children: [
-                  const Spacer(),
-                  ExpandedButtonRow(
-                      onPressed: () {
+                const Spacer(),
+                Expanded(
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      ExpandedButtonRow(
+                          onPressed: () {
                         RedisCommand.kill(widget.where);
                       },
                       text: "Kill Command",
                       flex: 4,
-                      fontSize: 8,
+                      fontSize: fontSize,
                       height: 80),
-                  const Spacer(),
-                  ExpandedButtonRow(
-                      onPressed: () {
+                      const Spacer(),
+                      ExpandedButtonRow(
+                          onPressed: () {
                         send();
                       },
                       text: "send",
                       flex: 4,
-                      fontSize: 8,
+                      fontSize: fontSize,
                       height: 80),
-                  const Spacer(),
-                ],
-              ),
-            ),
-            const Spacer(),
-          ],
-        )));
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+              ],
+            )));
   }
 }
