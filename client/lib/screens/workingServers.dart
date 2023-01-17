@@ -15,10 +15,10 @@ class ShowDb extends StatefulWidget {
 }
 
 class _ShowDbState extends State<ShowDb> {
-  redis redisVals = redis();
+  Redis redisVals = Redis();
 
   checkDb() async {
-      try {
+    try {
       await redisVals.workingServers();
       if (mounted) {
         setState(() {});

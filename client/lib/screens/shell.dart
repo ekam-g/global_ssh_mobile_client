@@ -24,12 +24,12 @@ class _MoreDataState extends State<MoreData> {
     String oldData = "";
     while (true) {
       try {
-        String data = await redis.getCommand(widget.where);
+        String data = await Redis.getCommand(widget.where);
         if (oldData != data) {
           allowedSend = true;
           shellData.add(data);
           oldData = data;
-          path = await redis.getPath(widget.where);
+          path = await Redis.getPath(widget.where);
           if (mounted) {
             setState(() {});
           }

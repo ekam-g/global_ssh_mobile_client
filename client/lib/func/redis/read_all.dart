@@ -3,7 +3,7 @@ import 'package:redis/redis.dart';
 
 import '../check.dart';
 
-class redis {
+class Redis {
   List<String> allKeys = [];
   List<String> data = [];
 
@@ -63,14 +63,14 @@ class redis {
 
 class RedisCommand {
   static Future<void> kill(String where) async {
-    await redis.send(where, "&&kill");
+    await Redis.send(where, "&&kill");
   }
 
   static Future<void> sendCommand(String where, String what) async {
-    if (what.contains("command_sleep")) {
-      redis.send(where, "%%$what");
+    if (what.contains("cd")) {
+      Redis.send(where, "%%$what");
     } else {
-      redis.send(where, "&&$what");
+      Redis.send(where, "&&$what");
     }
   }
 }

@@ -12,7 +12,7 @@ Future<bool> check() async {
     if (pas == null || key == null || url == null || port == null) {
       return false;
     }
-    await redis.makeClient();
+    await Redis.makeClient();
     return true;
   } catch(e) {
     if (kDebugMode) {
