@@ -41,6 +41,7 @@ class _MoreDataState extends State<MoreData> {
           ScaffoldMessenger.of(context).showSnackBar(showError);
         }
       }
+      Future.delayed(const Duration(milliseconds: 5));
     }
   }
 
@@ -49,7 +50,6 @@ class _MoreDataState extends State<MoreData> {
       RedisCommand.sendCommand(widget.where, textController.text);
       textController.clear();
       allowedSend = false;
-      controller.jumpTo(shellData.length.toDouble());
     }
   }
 

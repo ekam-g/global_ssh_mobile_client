@@ -27,7 +27,6 @@ class _ShowDbState extends State<ShowDb> {
       error = e.toString();
       ScaffoldMessenger.of(context).showSnackBar(showError);
     }
-    await Future.delayed(const Duration(seconds: 1));
   }
 
   @override
@@ -47,6 +46,15 @@ class _ShowDbState extends State<ShowDb> {
     }
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            color: Colors.white,
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              Redis.makeClient();
+            },
+          ),
+        ],
         leading: IconButton(
           color: Colors.white,
           icon: const Icon(Icons.portrait_rounded),
